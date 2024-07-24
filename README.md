@@ -13,7 +13,7 @@
 1. Clone the repository:
 
    ```sh
-   git clone your-url-here
+   git clone https://github.com/adrianjiga/cypress-tests-assessment
    cd cypress-tests-assessment
    ```
 
@@ -30,8 +30,14 @@
 
 ## Running Tests
 
-You can run the tests from the Cypress Test Runner or via the command line:
+You can run the tests via the command line:
 
 ```sh
 npx cypress run
+```
+
+You can run the tests using the command line on Google Chrome browser by running:
+
+```sh
+npm run test:chrome
 ```
