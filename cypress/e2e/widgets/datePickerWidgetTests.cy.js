@@ -46,7 +46,7 @@ describe('Date Picker widget Suite', () => {
     cy.get('#datePickerMonthYearInput').clear().type(`${leapYearDate}{enter}`);
     cy.get('#datePickerMonthYearInput').should('have.value', leapYearDate);
 
-    const nonLeapYearDate = '02/29/2023';
+    const nonLeapYearDate = '02/29/2025';
     cy.get('#datePickerMonthYearInput')
       .clear()
       .type(`${nonLeapYearDate}{enter}`);
@@ -55,7 +55,7 @@ describe('Date Picker widget Suite', () => {
       nonLeapYearDate
     );
 
-    const rolloverDate = '04/31/2023';
+    const rolloverDate = '04/31/2025';
     cy.get('#datePickerMonthYearInput').clear().type(`${rolloverDate}{enter}`);
     cy.get('#datePickerMonthYearInput').should('have.value', '05/01/2023');
   });
