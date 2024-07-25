@@ -175,4 +175,30 @@ describe('Web Tables Suite', () => {
     cy.get('.rt-tbody div[role="row"]').should('have.length.at.most', 100);
     cy.get('.-totalPages').should('contain', '1');
   });
+
+  it('pagination when more than 5 records exist', () => {
+    for (let i = 0; i < 3; i++) {
+      cy.get('#addNewRecordButton').click();
+      cy.get('#firstName').type(`User${i}`);
+      cy.get('#lastName').type('Test');
+      cy.get('#userEmail').type(`user${i}@test.com`);
+      cy.get('#age').type('25');
+      cy.get('#salary').type('1000');
+      cy.get('#department').type('Test');
+      cy.get('#submit').click();
+    }
+
+    cy.get('select[aria-label="rows per page"]').select('5 rows');
+    cy.get('.-totalPages').should('contain', '2');
+
+    cy.get('.-next').click();
+    cy.get('.rt-tbody div[role="row"]').should('have.length.at.least', 1);
+    cy.contains('.rt-tr-group', 'User2').should('be.visible');
+
+    cy.get('.-previous').should('not.be.disabled');
+    cy.get('.-previous').click();
+    cy.contains('.rt-tr-group', 'Cierra').should('be.visible');
+
+    cy.get('.-next').should('not.be.disabled');
+  });
 });
