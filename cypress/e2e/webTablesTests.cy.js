@@ -6,7 +6,7 @@ describe('Web Tables Suite', () => {
     cy.visit('/webtables');
   });
 
-  it('search for a record and verify the result', () => {
+  it('search for a record', () => {
     const searchTerm = 'Cierra';
 
     cy.get('#searchBox').type(searchTerm).should('have.value', searchTerm);
@@ -50,5 +50,103 @@ describe('Web Tables Suite', () => {
       cy.get('.rt-td').eq(2).should('contain', newAge);
       cy.get('.rt-td').eq(5).should('contain', newDepartment);
     });
+  });
+
+  it('add a new record', () => {
+    const adrian = {
+      firstName: 'Adrian',
+      lastName: 'Jiga',
+      email: 'jiga.ion.adrian@gmail.com',
+      age: '29',
+      salary: '15000',
+      department: 'Engineering',
+    };
+
+    cy.get('#addNewRecordButton').click();
+    cy.get('.modal-content').should('be.visible');
+    cy.get('#registration-form-modal').should('contain', 'Registration Form');
+
+    cy.get('#firstName')
+      .type(adrian.firstName)
+      .should('have.value', adrian.firstName);
+    cy.get('#lastName')
+      .type(adrian.lastName)
+      .should('have.value', adrian.lastName);
+    cy.get('#userEmail').type(adrian.email).should('have.value', adrian.email);
+    cy.get('#age').type(adrian.age).should('have.value', adrian.age);
+    cy.get('#salary').type(adrian.salary).should('have.value', adrian.salary);
+    cy.get('#department')
+      .type(adrian.department)
+      .should('have.value', adrian.department);
+
+    cy.get('#submit').click();
+    cy.get('.modal-content').should('not.exist');
+
+    cy.get('.rt-tbody').within(() => {
+      cy.contains('.rt-tr-group', adrian.firstName).within(() => {
+        cy.get('.rt-td').eq(0).should('contain', adrian.firstName);
+        cy.get('.rt-td').eq(1).should('contain', adrian.lastName);
+        cy.get('.rt-td').eq(2).should('contain', adrian.age);
+        cy.get('.rt-td').eq(3).should('contain', adrian.email);
+        cy.get('.rt-td').eq(4).should('contain', adrian.salary);
+        cy.get('.rt-td').eq(5).should('contain', adrian.department);
+        cy.get('.rt-td').eq(6).find('span[title="Edit"]').should('exist');
+        cy.get('.rt-td').eq(6).find('span[title="Delete"]').should('exist');
+      });
+    });
+  });
+
+  it('delete an existing record', () => {
+    cy.get('.rt-tbody div[role="row"]')
+      .not('.-padRow')
+      .then(($rows) => {
+        const initialRowCount = $rows.length;
+
+        const secondRecord = {
+          firstName: $rows.eq(1).find('div').eq(0).text().trim(),
+          lastName: $rows.eq(1).find('div').eq(1).text().trim(),
+          age: $rows.eq(1).find('div').eq(2).text().trim(),
+          email: $rows.eq(1).find('div').eq(3).text().trim(),
+          salary: $rows.eq(1).find('div').eq(4).text().trim(),
+          department: $rows.eq(1).find('div').eq(5).text().trim(),
+        };
+
+        //delete first record
+        cy.get('#delete-record-1').click();
+        cy.get('.rt-tbody div[role="row"]')
+          .not('.-padRow')
+          .should('have.length', initialRowCount - 1);
+
+        //check that the 2nd record moved up to the first row
+        cy.get('.rt-tbody div[role="row"]')
+          .not('.-padRow')
+          .first()
+          .within(($firstRow) => {
+            cy.wrap($firstRow)
+              .find('div')
+              .eq(0)
+              .should('have.text', secondRecord.firstName);
+            cy.wrap($firstRow)
+              .find('div')
+              .eq(1)
+              .should('have.text', secondRecord.lastName);
+            cy.wrap($firstRow)
+              .find('div')
+              .eq(2)
+              .should('have.text', secondRecord.age);
+            cy.wrap($firstRow)
+              .find('div')
+              .eq(3)
+              .should('have.text', secondRecord.email);
+            cy.wrap($firstRow)
+              .find('div')
+              .eq(4)
+              .should('have.text', secondRecord.salary);
+            cy.wrap($firstRow)
+              .find('div')
+              .eq(5)
+              .should('have.text', secondRecord.department);
+          });
+      });
   });
 });
