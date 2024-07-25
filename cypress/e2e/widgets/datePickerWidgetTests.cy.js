@@ -57,6 +57,6 @@ describe('Date Picker widget Suite', () => {
 
     const rolloverDate = '04/31/2025';
     cy.get('#datePickerMonthYearInput').clear().type(`${rolloverDate}{enter}`);
-    cy.get('#datePickerMonthYearInput').should('have.value', '05/01/2023');
+    cy.get('#datePickerMonthYearInput').should('have.value', '05/01/2025');
   });
 });
