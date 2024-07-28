@@ -4,6 +4,7 @@ describe('Web Tables Suite', () => {
       return false;
     });
     cy.visit('/webtables');
+    cy.get('h1').should('contain', 'Web Tables');
   });
 
   it('search for a record', () => {

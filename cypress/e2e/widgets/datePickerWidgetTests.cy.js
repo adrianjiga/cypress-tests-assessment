@@ -16,7 +16,6 @@ describe('Date Picker widget Suite', () => {
     cy.selectDate(futureDate);
 
     cy.get('#datePickerMonthYearInput').should('have.value', futureDate);
-
     cy.get('#datePickerMonthYearInput').click();
 
     cy.get('.react-datepicker__month-select').should(

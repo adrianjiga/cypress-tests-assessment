@@ -4,6 +4,7 @@ describe('Tool Tips Suite', () => {
       return false;
     });
     cy.visit('/tool-tips');
+    cy.get('h1').should('contain', 'Tool Tips');
   });
 
   it('tooltip on button hover', () => {

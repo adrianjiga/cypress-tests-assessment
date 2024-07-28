@@ -4,6 +4,7 @@ describe('Radio Buttons Suite', () => {
       return false;
     });
     cy.visit('/radio-button');
+    cy.get('h1').should('contain', 'Radio Button');
   });
 
   it('select Yes and verify the result', () => {
