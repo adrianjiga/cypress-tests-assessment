@@ -23,3 +23,11 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('selectDate', (date) => {
+  cy.get('#datePickerMonthYearInput')
+    .should('be.visible')
+    .and('be.enabled')
+    .clear()
+    .type(`${date}{enter}`);
+});
