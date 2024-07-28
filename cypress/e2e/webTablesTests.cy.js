@@ -7,11 +7,9 @@ describe('Web Tables Suite', () => {
   });
 
   it('search for a record', () => {
-    const searchTerm = 'Cierra';
+    cy.get('#searchBox').type('Cierra').should('have.value', 'Cierra');
 
-    cy.get('#searchBox').type(searchTerm).should('have.value', searchTerm);
-
-    cy.contains('.rt-tbody div[role="row"]', searchTerm)
+    cy.contains('.rt-tbody div[role="row"]', 'Cierra')
       .not('.-padRow')
       .should('be.visible');
 
@@ -103,12 +101,12 @@ describe('Web Tables Suite', () => {
         const initialRowCount = $rows.length;
 
         const secondRecord = {
-          firstName: $rows.eq(1).find('div').eq(0).text().trim(),
-          lastName: $rows.eq(1).find('div').eq(1).text().trim(),
-          age: $rows.eq(1).find('div').eq(2).text().trim(),
-          email: $rows.eq(1).find('div').eq(3).text().trim(),
-          salary: $rows.eq(1).find('div').eq(4).text().trim(),
-          department: $rows.eq(1).find('div').eq(5).text().trim(),
+          firstName: $rows.eq(1).find('div').eq(0).text(),
+          lastName: $rows.eq(1).find('div').eq(1).text(),
+          age: $rows.eq(1).find('div').eq(2).text(),
+          email: $rows.eq(1).find('div').eq(3).text(),
+          salary: $rows.eq(1).find('div').eq(4).text(),
+          department: $rows.eq(1).find('div').eq(5).text(),
         };
 
         //delete first record
