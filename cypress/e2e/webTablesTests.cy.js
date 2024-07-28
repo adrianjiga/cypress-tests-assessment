@@ -149,29 +149,18 @@ describe('Web Tables Suite', () => {
   });
 
   it('change the number of rows displayed', () => {
-    cy.get('select[aria-label="rows per page"]').select('5 rows');
-    cy.get('.rt-tbody div[role="row"]').should('have.length.at.most', 5);
-    cy.get('.-totalPages').should('contain', '1');
+    const rowsPerPageOptions = [5, 10, 20, 25, 50, 100];
 
-    cy.get('select[aria-label="rows per page"]').select('10 rows');
-    cy.get('.rt-tbody div[role="row"]').should('have.length.at.most', 10);
-    cy.get('.-totalPages').should('contain', '1');
-
-    cy.get('select[aria-label="rows per page"]').select('20 rows');
-    cy.get('.rt-tbody div[role="row"]').should('have.length.at.most', 20);
-    cy.get('.-totalPages').should('contain', '1');
-
-    cy.get('select[aria-label="rows per page"]').select('25 rows');
-    cy.get('.rt-tbody div[role="row"]').should('have.length.at.most', 25);
-    cy.get('.-totalPages').should('contain', '1');
-
-    cy.get('select[aria-label="rows per page"]').select('50 rows');
-    cy.get('.rt-tbody div[role="row"]').should('have.length.at.most', 50);
-    cy.get('.-totalPages').should('contain', '1');
-
-    cy.get('select[aria-label="rows per page"]').select('100 rows');
-    cy.get('.rt-tbody div[role="row"]').should('have.length.at.most', 100);
-    cy.get('.-totalPages').should('contain', '1');
+    rowsPerPageOptions.forEach((rowsPerPage) => {
+      cy.get('select[aria-label="rows per page"]').select(
+        `${rowsPerPage} rows`
+      );
+      cy.get('.rt-tbody div[role="row"]').should(
+        'have.length.at.most',
+        rowsPerPage
+      );
+      cy.get('.-totalPages').should('contain', '1');
+    });
   });
 
   it('pagination when more than 5 records exist', () => {
