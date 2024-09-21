@@ -44,7 +44,7 @@ npm run test:chrome
 
 ## Selector Issues Encountered
 
-A major problem is the absence of `data-*` attributes on the [www.demoqa.com](https://www.demoqa.com) website. These attributes help isolate selectors from CSS and JavaScript changes.
+A major problem is the absence of `data-*` attributes on the [demoqa.com](https://demoqa.com) website. These attributes help isolate selectors from CSS and JavaScript changes.
 
 For example, instead of using `cy.get('.react-datepicker__month-select')`, it would be more robust to use `cy.get('[data-cy="date-picker-month-select"]')` if `data-*` attributes were available.
 
@@ -54,7 +54,7 @@ This is the first thing recommended in the [Best Practices](https://docs.cypress
 
 ## App Issues Encountered
 
-Another issue I encountered is a persistent console error on every page of the [www.demoqa.com](https://www.demoqa.com) website. This caused all of the tests to fail since Cypress stops if there are any errors in the application.
+Another issue I encountered is a persistent console error on every page of the [demoqa.com](https://demoqa.com) website. This caused all of the tests to fail since Cypress stops if there are any errors in the application.
 
 A workaround I found was to add this code:
 
